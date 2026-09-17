@@ -1,0 +1,159 @@
+﻿# ============================================================
+# Model Configuration
+# ============================================================
+
+project:
+  name: intelligent-supply-chain
+  version: "1.0.0"
+  random_seed: 42
+
+# ============================================================
+# Data
+# ============================================================
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  train_split: 0.70
+  val_split: 0.15
+  test_split: 0.15
+  forecast_horizon: 7        # days ahead to forecast demand
+  lookback_window: 30        # days of history used as features
+
+# ============================================================
+# Demand Forecasting
+# ============================================================
+demand:
+  xgboost:
+    n_estimators: 500
+    learning_rate: 0.05
+    max_depth: 6
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    early_stopping_rounds: 50
+  lstm:
+    input_size: 20            # number of features
+    hidden_size: 128
+    num_layers: 2
+    dropout: 0.2
+    sequence_length: 30
+    batch_size: 64
+    epochs: 100
+    learning_rate: 0.001
+    patience: 15              # early stopping
+  evaluation:
+    metrics: [mae, rmse, mape]
+
+# ============================================================
+# Stockout Prediction
+# ============================================================
+stockout:
+  xgboost:
+    n_estimators: 400
+    learning_rate: 0.05
+    max_depth: 5
+    subsample: 0.8
+    colsample_bytree: 0.8
+    scale_pos_weight: 3       # handle class imbalance
+    early_stopping_rounds: 40
+  threshold: 0.5              # classification threshold
+  calibration: isotonic       # isotonic | sigmoid
+  evaluation:
+    metrics: [f1, roc_auc, pr_auc, precision, recall]
+
+# ============================================================
+# Supplier Risk
+# ============================================================
+supplier_risk:
+  xgboost:
+    n_estimators: 300
+    learning_rate: 0.05
+    max_depth: 4
+    subsample: 0.8
+    colsample_bytree: 0.8
+    scale_pos_weight: 2
+    early_stopping_rounds: 30
+  threshold: 0.5
+  calibration: isotonic
+  evaluation:
+    metrics: [f1, roc_auc, pr_auc, precision, recall]
+
+# ============================================================
+# ETA Prediction
+# ============================================================
+eta:
+  xgboost:
+    n_estimators: 400
+    learning_rate: 0.05
+    max_depth: 6
+    subsample: 0.8
+    colsample_bytree: 0.8
+    early_stopping_rounds: 40
+  evaluation:
+    metrics: [mae, rmse]
+
+# ============================================================
+# Anomaly Detection
+# ============================================================
+anomaly:
+  autoencoder:
+    input_dim: 15             # number of features after encoding
+    hidden_dims: [64, 32, 16]
+    latent_dim: 8
+    dropout: 0.1
+    epochs: 150
+    batch_size: 128
+    learning_rate: 0.001
+    patience: 20
+  threshold_percentile: 95    # reconstruction error percentile for anomaly flag
+  evaluation:
+    metrics: [precision, recall, f1, false_positive_rate]
+
+# ============================================================
+# Risk Engine
+# ============================================================
+risk_engine:
+  weights:
+    stockout_probability: 0.30
+    supplier_risk_score: 0.25
+    demand_surge_index: 0.25
+    shipment_delay_risk: 0.10
+    anomaly_score: 0.10
+  thresholds:
+    green: 30
+    amber: 60
+    red: 100
+
+# ============================================================
+# Decision Engine
+# ============================================================
+decision_engine:
+  eoq:
+    ordering_cost: 500        # dollars per order
+    holding_cost_rate: 0.25   # fraction of unit cost per year
+  safety_stock:
+    service_level_z: 1.65     # z-score for 95% service level
+  stockout_trigger: 0.70      # stockout prob above which we recommend reorder
+  supplier_risk_trigger: 0.60 # supplier risk above which we recommend alternative
+
+# ============================================================
+# MLflow
+# ============================================================
+mlflow:
+  tracking_uri: http://localhost:5000
+  experiment_names:
+    demand: demand_forecasting
+    stockout: stockout_prediction
+    supplier_risk: supplier_risk_prediction
+    eta: eta_prediction
+    anomaly: anomaly_detection
+
+# ============================================================
+# Monitoring
+# ============================================================
+monitoring:
+  drift_check_window_days: 30
+  psi_threshold: 0.20         # Population Stability Index; alert if exceeded
+  rmse_degradation_threshold: 0.15  # 15% worse than baseline triggers retrain
+  report_output_dir: mlflow/monitoring_reports

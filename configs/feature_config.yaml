@@ -1,0 +1,81 @@
+﻿# ============================================================
+# Feature Configuration
+# ============================================================
+
+demand_features:
+  lag_days: [1, 3, 7, 14, 21, 28]
+  rolling_windows: [7, 14, 28]
+  rolling_stats: [mean, std, min, max]
+  calendar:
+    - day_of_week
+    - day_of_month
+    - week_of_year
+    - month
+    - quarter
+    - is_weekend
+    - is_holiday
+    - days_to_holiday
+  external:
+    - temperature
+    - precipitation
+    - promotion_active
+    - discount_pct
+    - price
+
+shipment_features:
+  - distance_km
+  - vehicle_type_encoded
+  - day_of_week
+  - hour_of_day
+  - is_weekend
+  - weather_severity
+  - traffic_index
+  - historical_avg_duration
+  - historical_std_duration
+  - origin_region_encoded
+  - dest_region_encoded
+  - carrier_on_time_rate
+
+supplier_features:
+  - on_time_delivery_rate
+  - avg_delay_days
+  - std_delay_days
+  - defect_rate
+  - cancellation_rate
+  - order_count_last_90d
+  - capacity_utilization
+  - price_change_pct
+  - region_encoded
+  - delay_trend_30d      # slope of delay over last 30 days
+  - defect_trend_30d
+  - seasonal_performance
+
+stockout_features:
+  - current_inventory
+  - avg_daily_demand_7d
+  - avg_daily_demand_30d
+  - demand_volatility
+  - forecast_demand_7d
+  - supplier_lead_time
+  - incoming_po_units
+  - days_of_supply
+  - promotion_active
+  - seasonal_demand_index
+  - reorder_point
+
+anomaly_features:
+  - shipment_duration_hours
+  - distance_km
+  - expected_duration_hours
+  - duration_deviation
+  - day_of_week
+  - vehicle_type_encoded
+  - weather_severity
+  - traffic_index
+  - origin_region_encoded
+  - dest_region_encoded
+  - carrier_on_time_rate
+  - historical_avg_duration
+  - historical_std_duration
+  - stop_count
+  - load_weight_kg
