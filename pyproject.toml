@@ -1,4 +1,4 @@
-﻿[tool.pytest.ini_options]
+[tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
 addopts = "-v --tb=short --cov=src --cov=api --cov-report=term-missing"
