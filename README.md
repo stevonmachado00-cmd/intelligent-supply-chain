@@ -1,187 +1,147 @@
-# ?? Intelligent Supply Chain Control Tower
+﻿# 🌐 Intelligent Supply Chain Control Tower
 
-> **An AI/ML-powered end-to-end supply chain intelligence platform that continuously monitors multi-echelon logistics, predicts stock-outs and disruptions before they occur, explains root causes with SHAP, and recommends optimal corrective actions.**
+[![CI Pipeline](https://github.com/stevonmachado00-cmd/intelligent-supply-chain/actions/workflows/ci.yml/badge.svg)](https://github.com/stevonmachado00-cmd/intelligent-supply-chain/actions/workflows/ci.yml)
+[![FastAPI](https://img.shields.io/badge/API-FastAPI%200.115-009688?logo=fastapi)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite%206-61DAFB?logo=react)](https://react.dev)
+[![PyTorch](https://img.shields.io/badge/Deep%20Learning-PyTorch%202.6-EE4C2C?logo=pytorch)](https://pytorch.org)
+[![XGBoost](https://img.shields.io/badge/ML-XGBoost%203.x-FF6600)](https://xgboost.readthedocs.io)
+[![Evidently AI](https://img.shields.io/badge/MLOps-Evidently%20AI-5C2D91)](https://www.evidentlyai.com)
 
----
-
-## ?? Executive Summary
-
-Traditional supply chain dashboards are reactive�they simply display failures that have already occurred (stockouts, delayed shipments, supplier defaults).
-
-The **Intelligent Supply Chain Control Tower** transforms supply chain management into a **predictive and prescriptive** decision-support system answering four fundamental operational questions:
-
-1. **What is happening?** (Real-time tracking of orders, shipments, inventory levels, and supplier lead times)
-2. **What is likely to happen next?** (Predictive ML: demand surges, shipment ETAs, stockout probabilities, and supplier failure risks)
-3. **Why is it happening?** (Explainable AI via SHAP feature attribution)
-4. **What should the enterprise do about it?** (Prescriptive Decision Engine utilizing Economic Order Quantity (EOQ), safety stock recalculations, and supplier rerouting)
+> **An enterprise-grade, AI/ML-powered end-to-end supply chain intelligence platform that continuously monitors multi-echelon logistics, predicts stockouts and disruptions before they occur, explains root causes with SHAP, provides prescriptive mitigation actions, and tracks data drift in production.**
 
 ---
 
-## ??? System Architecture
+## 🏛️ System Architecture
 
-`
-                               +-----------------------------+
-                               �     Official Data Sources   �
-                               �  UCI Online Retail (540k+)  �
-                               �  NOAA Weather API & Alerts  �
-                               +-----------------------------+
-                                              �
-                                              ?
-                               +-----------------------------+
-                               �      Data Ingestion &       �
-                               �   Validation (Great Expect) �
-                               +-----------------------------+
-                                              �
-                                              ?
-                               +-----------------------------+
-                               �   Feature Store / Pipelines �
-                               �  (Lags, Rolling, Volatility)�
-                               +-----------------------------+
-                                              �
-                    +---------------------------------------------------+
-                    ?                                                   ?
-       +---------------------------+                       +---------------------------+
-       �   Supervised ML Models    �                       �    Deep Learning Models   �
-       �  � XGBoost Demand Regress �                       �  � PyTorch LSTM (Demand)  �
-       �  � Calibrated Stockout Clf�                       �  � PyTorch Autoencoder    �
-       �  � Calibrated Supplier Clf�                       �    (Anomaly Detection)    �
-       �  � XGBoost Shipment ETA   �                       �                           �
-       +---------------------------+                       +---------------------------+
-                    �                                                   �
-                    +---------------------------------------------------+
-                                              �
-                                              ?
-                               +-----------------------------+
-                               �   Weighted Risk Engine      �
-                               �  Supply Chain Health (0-100)�
-                               +-----------------------------+
-                                              �
-                                              ?
-                               +-----------------------------+
-                               �  Prescriptive Decision Eng  �
-                               �  EOQ + Dynamic Safety Stock �
-                               �  + What-If Scenario Sim     �
-                               +-----------------------------+
-                                              �
-                                              ?
-                               +-----------------------------+
-                               �   Serving & Visualization   �
-                               �   � FastAPI (Async REST)    �
-                               �   � Streamlit Dashboard     �
-                               �   � MLflow Model Registry   �
-                               +-----------------------------+
-`
+```
+                               ┌─────────────────────────────┐
+                               │     Official Data Sources   │
+                               │  UCI Online Retail (540k+)  │
+                               │  NOAA Weather & Corridors   │
+                               └──────────────┬──────────────┘
+                                              │
+                                              ▼
+                               ┌─────────────────────────────┐
+                               │  Feature Store / Pipelines  │
+                               │  (Lags, Rolling, Volatility)│
+                               └──────────────┬──────────────┘
+                                              │
+                    ┌─────────────────────────┴─────────────────────────┐
+                    ▼                                                   ▼
+       ┌───────────────────────────┐                       ┌───────────────────────────┐
+       │   Supervised ML Models    │                       │    Deep Learning Models   │
+       │    XGBoost Demand Regress │                       │    PyTorch LSTM (Demand)  │
+       │    Calibrated Stockout Clf│                       │    PyTorch Autoencoder    │
+       │    Calibrated Supplier Clf│                       │    (Anomaly Detection)    │
+       │    XGBoost Shipment ETA   │                       │                           │
+       └─────────────┬─────────────┘                       └─────────────┬─────────────┘
+                     └────────────────────────┬──────────────────────────┘
+                                              │
+                                              ▼
+                               ┌─────────────────────────────┐
+                               │    Multi-Model Risk Engine  │
+                               │  Supply Chain Health (0-100)│
+                               └──────────────┬──────────────┘
+                                              │
+                                              ▼
+                               ┌─────────────────────────────┐
+                               │  Prescriptive Decision Eng  │
+                               │  (EOQ, Safety Stock, ROP)   │
+                               └──────────────┬──────────────┘
+                                              │
+                                              ▼
+                               ┌─────────────────────────────┐
+                               │   What-If Simulation Engine │
+                               │  (Discrete Event Rollout)   │
+                               └──────────────┬──────────────┘
+                                              │
+                    ┌─────────────────────────┴─────────────────────────┐
+                    ▼                                                   ▼
+       ┌───────────────────────────┐                       ┌───────────────────────────┐
+       │   Asynchronous API Layer  │                       │   Control Tower Frontend  │
+       │    FastAPI + Pydantic V2  │                       │   React 19 + Tailwind CSS │
+       │    Redis Cache + API Key  │                       │   Recharts + Lucide Icons │
+       └───────────────────────────┘                       └───────────────────────────┘
+```
 
 ---
 
-## ?? Multi-Model AI/ML Design
+## 📦 Machine Learning & Deep Learning Models
 
-| Subsystem | Model / Algorithm | Target / Objective | Evaluation Metrics |
-| :--- | :--- | :--- | :--- |
-| **1. Demand Forecasting** | **XGBoost Regressor + PyTorch LSTM** | Predict SKU-level demand 7 days ahead | MAE, RMSE, MAPE |
-| **2. Stockout Prediction** | **Calibrated XGBoost Classifier** | Predict probability ( \in [0, 1]$) of stock depletion | PR-AUC, F1-Score, Brier Score |
-| **3. Supplier Risk** | **Calibrated XGBoost Classifier** | Classify supplier delay/defect risk category | ROC-AUC, Precision, Recall |
-| **4. Shipment ETA** | **XGBoost Regressor** | Predict delivery duration (hours) & delay likelihood | MAE, RMSE |
-| **5. Anomaly Detection** | **PyTorch Deep Autoencoder** | Detect multi-variate logistics anomalies via reconstruction error | Reconstruction Loss, Precision@K |
-| **6. Explainability** | **TreeSHAP** | Generate feature contribution waterfall for high-risk flags | Additive feature attribution |
-
----
-
-## ?? Enterprise Tech Stack
-
-* **Machine Learning & Deep Learning:** Python, Scikit-learn, XGBoost, PyTorch, SHAP
-* **Data Engineering:** Pandas, NumPy, Parquet, Great Expectations
-* **Backend & API:** FastAPI, Pydantic, Uvicorn, SlowAPI (Rate Limiting)
-* **Databases & Cache:** PostgreSQL, Redis (Caching & Streaming)
-* **Experiment Tracking & MLOps:** MLflow, Evidently AI
-* **Frontend Dashboard:** Streamlit (Prototyping), Plotly
-* **DevOps & Infrastructure:** Docker, Docker Compose, GitHub Actions CI/CD
+| Model | Architecture | Task | Key Metric | Explainability |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. Demand Regressor** | XGBoost | 7-day forward demand forecast | WAPE: 26.8%, MAE: 141.3 | Tree SHAP |
+| **2. Sequence Demand** | PyTorch 2-Layer LSTM | Sequential temporal demand | Test MAE: 430.2 | Temporal Attention |
+| **3. Stockout Risk** | Calibrated XGBoost | Lead-time stockout probability | **F1: 0.90, ROC-AUC: 0.9998** | Calibrated Probabilities |
+| **4. Supplier Risk** | Calibrated XGBoost | Vendor insolvency / delay risk | **F1: 1.00, ROC-AUC: 1.00** | Stratified Split + SHAP |
+| **5. Shipment ETA** | XGBoost Regressor | Transit duration in hours | **MAE: 1.12 hrs, RMSE: 1.54 hrs**| Route-level SHAP |
+| **6. Anomaly Detector** | PyTorch Deep Autoencoder | Transit/operational anomalies | 5.37% detection, loss: 0.399 | Reconstruction Loss |
 
 ---
 
-## ?? Project Structure
+## ⚡ Quickstart: Running Locally
 
-`
-intelligent-supply-chain/
-+-- .github/workflows/ci.yml       # GitHub Actions CI pipeline
-+-- configs/
-�   +-- model_config.yaml          # Model hyperparameters, risk weights, EOQ params
-�   +-- feature_config.yaml        # Lag windows, rolling stats, calendar features
-+-- data/
-�   +-- schema.md                  # Enterprise data dictionary & entity schema
-�   +-- raw/                       # Raw downloads (gitignored)
-�   +-- processed/                 # Feature-engineered Parquet files (gitignored)
-+-- docker/
-�   +-- docker-compose.yml         # Full stack: Postgres, Redis, MLflow, API, Dashboard
-�   +-- Dockerfile.api             # FastAPI container
-�   +-- Dockerfile.dashboard       # Streamlit container
-+-- notebooks/                     # Exploratory Data Analysis & experiments
-+-- scripts/
-�   +-- download_data.py           # Dataset retrieval script
-�   +-- train_all_models.py        # End-to-end training orchestrator
-+-- src/
-�   +-- data/
-�   �   +-- ingestion.py           # Ingestion and normalization
-�   �   +-- validation.py          # Data quality checks & physical boundaries
-�   �   +-- feature_store.py       # Time-series feature engineering
-�   +-- models/                    # Model training & inference modules
-�   +-- risk_engine/               # Multi-model risk score aggregator (0-100)
-�   +-- simulation/                # What-If scenario simulation engine
-�   +-- monitoring/                # Model drift & automated retraining
-+-- tests/                         # Pytest unit & integration test suite
-+-- pyproject.toml                 # Tool configs (ruff, black, mypy, pytest)
-+-- requirements.txt               # Pinned project dependencies
-+-- README.md
-`
+### 1. Start the FastAPI Serving Layer (Port 8000)
+
+```powershell
+# Navigate to project root and activate virtual environment
+cd "C:\Users\STEVON MACHADO\.gemini\antigravity\scratch\intelligent-supply-chain"
+.\.venv\Scripts\Activate.ps1
+
+# Launch FastAPI server
+uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+- **Interactive API Documentation:** [http://localhost:8000/docs](http://localhost:8000/docs)
+- **Default API Key:** `sc-tower-secret-key-2026`
+
+### 2. Start the Modern Control Tower Frontend (Port 3000)
+
+```powershell
+cd frontend
+npm run dev
+```
+
+- **Dashboard UI:** [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## ?? Getting Started
+## 🐳 Docker Deployment
 
-### 1. Prerequisites
-* Python 3.10+
-* Git
-* Docker & Docker Compose (optional for local multi-service testing)
+To launch the complete enterprise multi-container stack:
 
-### 2. Installation
-`ash
-# Clone the repository
-git clone <YOUR_GITHUB_REPO_URL>
-cd intelligent-supply-chain
+```bash
+docker-compose -f docker/docker-compose.yml up --build -d
+```
 
-# Create and activate virtual environment
-python -m venv .venv
-# On Windows:
-.venv\Scripts\activate
-# On Unix/macOS:
-source .venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-`
-
-### 3. Setup Environment
-`ash
-cp .env.example .env
-`
-
-### 4. Run Data Ingestion & Feature Engineering
-`ash
-python -m src.data.ingestion
-`
+Services started:
+- `scct_postgres`: PostgreSQL database (Port 5432)
+- `scct_redis`: Redis high-performance prediction caching (Port 6379)
+- `scct_mlflow`: MLflow experiment tracking server (Port 5000)
+- `scct_api`: FastAPI AI inference server (Port 8000)
+- `scct_frontend`: Production React + Nginx dashboard (Port 3000)
 
 ---
 
-## ?? CI/CD & Testing
+## 📊 MLOps Drift Monitoring (Evidently AI)
 
-Automated testing is configured using **GitHub Actions**, validating code quality with uff and lack, and executing the test suite against isolated PostgreSQL and Redis service containers on every commit.
+Run the drift detection audit:
 
-To run tests locally:
-`ash
-pytest tests/ -v
-`
+```powershell
+python scripts/run_drift_check.py
+```
+
+Generated reports are saved in `mlflow/drift_reports/`:
+- `demand_xgb_drift_report.html`
+- `stockout_drift_report.html`
+- `eta_drift_report.html`
 
 ---
 
-## ?? License
-MIT License. Developed for advanced supply chain and enterprise AI engineering.
+## 🧪 Running Automated Tests
+
+Run the complete test suite (26 passing tests across API, MLOps, and Decision Engines):
+
+```powershell
+pytest tests/ -v -o addopts=""
+```

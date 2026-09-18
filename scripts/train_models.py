@@ -34,15 +34,6 @@ import torch.nn as nn
 import xgboost as xgb
 from loguru import logger
 from sklearn.calibration import CalibratedClassifierCV
-try:
-    from sklearn.frozen import FrozenEstimator
-except ImportError:
-    # Older scikit-learn compatibility
-    class FrozenEstimator:
-        def __init__(self, estimator):
-            self.estimator = estimator
-        def __getattr__(self, name):
-            return getattr(self.estimator, name)
 from sklearn.metrics import (
     average_precision_score,
     classification_report,
@@ -344,14 +335,14 @@ def train_stockout_model():
     logger.info(f"  Computed scale_pos_weight: {pos_weight:.1f}")
 
     base_model = xgb.XGBClassifier(
-        n_estimators=400, learning_rate=0.05, max_depth=5,
+        n_estimators=300, learning_rate=0.05, max_depth=5,
         subsample=0.8, colsample_bytree=0.8, scale_pos_weight=min(pos_weight, 10),
-        random_state=SEED, n_jobs=-1, eval_metric="aucpr", early_stopping_rounds=40,
+        random_state=SEED, n_jobs=-1, eval_metric="aucpr",
     )
     base_model.fit(X_train, y_train, eval_set=[(X_val, y_val)], verbose=False)
 
-    # Calibrate using FrozenEstimator for scikit-learn 1.4+ compatibility
-    calibrated = CalibratedClassifierCV(FrozenEstimator(base_model), method="isotonic")
+    # Calibrate using cv='prefit'
+    calibrated = CalibratedClassifierCV(base_model, cv="prefit", method="isotonic")
     calibrated.fit(X_val, y_val)
 
     # Evaluate
@@ -408,13 +399,13 @@ def train_supplier_risk_model():
     pos_weight = max(1.0, (y_train == 0).sum() / max(1, (y_train == 1).sum()))
 
     base_model = xgb.XGBClassifier(
-        n_estimators=200, learning_rate=0.05, max_depth=3,
+        n_estimators=150, learning_rate=0.05, max_depth=3,
         subsample=0.8, colsample_bytree=0.8, scale_pos_weight=min(pos_weight, 5),
-        random_state=SEED, n_jobs=-1, eval_metric="aucpr", early_stopping_rounds=30,
+        random_state=SEED, n_jobs=-1, eval_metric="aucpr",
     )
     base_model.fit(X_train, y_train, eval_set=[(X_val, y_val)], verbose=False)
 
-    calibrated = CalibratedClassifierCV(FrozenEstimator(base_model), method="sigmoid")
+    calibrated = CalibratedClassifierCV(base_model, cv="prefit", method="sigmoid")
     calibrated.fit(X_val, y_val)
 
     y_prob = calibrated.predict_proba(X_test)[:, 1]

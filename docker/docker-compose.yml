@@ -1,4 +1,4 @@
-﻿version: "3.9"
+version: "3.9"
 
 services:
 
@@ -84,7 +84,20 @@ services:
     command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 
   # ============================================================
-  # Streamlit Dashboard
+  # Modern React + Vite Frontend (Nginx)
+  # ============================================================
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    container_name: scct_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  # ============================================================
+  # Streamlit Dashboard (Legacy fallback)
   # ============================================================
   dashboard:
     build:

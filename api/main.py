@@ -19,7 +19,7 @@ from loguru import logger
 
 from api.dependencies import get_model_registry
 from api.middleware.auth import ProcessTimeMiddleware
-from api.routers import decisions, health, predict, risk, simulation
+from api.routers import decisions, health, monitoring, predict, risk, simulation
 
 
 @asynccontextmanager
@@ -62,6 +62,7 @@ app.include_router(predict.router)
 app.include_router(risk.router)
 app.include_router(decisions.router)
 app.include_router(simulation.router)
+app.include_router(monitoring.router)
 
 
 @app.get("/", tags=["Root"])
