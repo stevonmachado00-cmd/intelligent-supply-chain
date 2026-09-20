@@ -1,4 +1,4 @@
-﻿# 🌐 Intelligent Supply Chain Control Tower
+# 🌐 Intelligent Supply Chain Control Tower
 
 [![CI Pipeline](https://github.com/stevonmachado00-cmd/intelligent-supply-chain/actions/workflows/ci.yml/badge.svg)](https://github.com/stevonmachado00-cmd/intelligent-supply-chain/actions/workflows/ci.yml)
 [![FastAPI](https://img.shields.io/badge/API-FastAPI%200.115-009688?style=flat&logo=fastapi)](https://fastapi.tiangolo.com)
@@ -8,6 +8,10 @@
 [![Evidently AI](https://img.shields.io/badge/MLOps-Evidently%20AI-5C2D91?style=flat)](https://www.evidentlyai.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[![Live Dashboard](https://img.shields.io/badge/Live%20Demo-Vercel%20Deployment-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://supply-chain-tower-tawny.vercel.app/)
+
+> **🚀 Live Interactive Application:** [https://supply-chain-tower-tawny.vercel.app/](https://supply-chain-tower-tawny.vercel.app/)
+>
 > **An enterprise-grade, predictive and prescriptive AI control tower designed to eliminate blind spots in multi-echelon global logistics. It anticipates demand surges, stockouts, supplier failures, and shipment delays before they occur, explains root causes with SHAP, auto-generates cost-optimized mitigation actions with calculated ROI, and monitors production data drift in real time.**
 
 ---
@@ -265,7 +269,13 @@ Built with **React 19, Vite, Tailwind CSS, Recharts, and Lucide icons** (running
 
 ## ⚡ Quickstart & Verification
 
-### 1. Prerequisites
+### 🌐 Live Production Application
+Access the deployed interactive dashboard directly in your browser without local setup:  
+👉 **[https://supply-chain-tower-tawny.vercel.app/](https://supply-chain-tower-tawny.vercel.app/)**
+
+### 💻 Running Locally
+
+#### 1. Prerequisites
 - Python 3.11+ (or Python 3.12)
 - Node.js 20+ & npm
 
