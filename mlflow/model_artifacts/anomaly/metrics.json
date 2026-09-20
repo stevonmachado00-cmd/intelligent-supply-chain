@@ -1,0 +1,9 @@
+{
+  "threshold": 0.589962,
+  "train_mean_error": 0.298844,
+  "test_mean_error": 0.298832,
+  "test_anomaly_rate": 0.0537,
+  "test_anomaly_count": 86,
+  "test_total": 1600,
+  "mean_anomaly_score": 0.2209
+}

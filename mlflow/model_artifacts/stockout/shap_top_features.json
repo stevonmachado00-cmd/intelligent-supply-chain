@@ -1,0 +1,42 @@
+[
+  {
+    "feature": "days_of_supply",
+    "mean_abs_shap": 2.4309
+  },
+  {
+    "feature": "current_stock",
+    "mean_abs_shap": 1.6042
+  },
+  {
+    "feature": "avg_demand_7d",
+    "mean_abs_shap": 1.1712
+  },
+  {
+    "feature": "incoming_po_units",
+    "mean_abs_shap": 0.5802
+  },
+  {
+    "feature": "avg_demand_30d",
+    "mean_abs_shap": 0.4941
+  },
+  {
+    "feature": "demand_volatility",
+    "mean_abs_shap": 0.2991
+  },
+  {
+    "feature": "lead_time_days",
+    "mean_abs_shap": 0.2066
+  },
+  {
+    "feature": "reorder_point",
+    "mean_abs_shap": 0.1676
+  },
+  {
+    "feature": "std_demand_30d",
+    "mean_abs_shap": 0.1256
+  },
+  {
+    "feature": "std_demand_7d",
+    "mean_abs_shap": 0.1081
+  }
+]

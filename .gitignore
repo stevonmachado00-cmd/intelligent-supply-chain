@@ -21,10 +21,10 @@ ENV/
 
 # Data (raw files can be large; processed data is reproducible)
 data/raw/
-data/processed/
+!data/processed/
 
 # Model artifacts (tracked in MLflow)
-mlflow/model_artifacts/
+!mlflow/model_artifacts/
 mlflow/mlruns/
 mlflow/*.db
 

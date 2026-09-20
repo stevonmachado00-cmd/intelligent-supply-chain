@@ -1,0 +1,42 @@
+[
+  {
+    "feature": "demand_roll_mean_7d",
+    "mean_abs_shap": 105.5524
+  },
+  {
+    "feature": "units_sold",
+    "mean_abs_shap": 36.2487
+  },
+  {
+    "feature": "demand_roll_max_7d",
+    "mean_abs_shap": 20.3511
+  },
+  {
+    "feature": "demand_lag_7d",
+    "mean_abs_shap": 19.5936
+  },
+  {
+    "feature": "demand_roll_std_7d",
+    "mean_abs_shap": 19.2627
+  },
+  {
+    "feature": "demand_lag_3d",
+    "mean_abs_shap": 16.8761
+  },
+  {
+    "feature": "demand_lag_1d",
+    "mean_abs_shap": 14.574
+  },
+  {
+    "feature": "demand_lag_2d",
+    "mean_abs_shap": 12.299
+  },
+  {
+    "feature": "week_of_year",
+    "mean_abs_shap": 10.0481
+  },
+  {
+    "feature": "day_of_month",
+    "mean_abs_shap": 9.1026
+  }
+]

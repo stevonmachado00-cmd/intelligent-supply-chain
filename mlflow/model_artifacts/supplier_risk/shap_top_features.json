@@ -1,0 +1,42 @@
+[
+  {
+    "feature": "on_time_delivery_rate",
+    "mean_abs_shap": 2.4731
+  },
+  {
+    "feature": "avg_delay_days",
+    "mean_abs_shap": 0.3041
+  },
+  {
+    "feature": "avg_delay_hours",
+    "mean_abs_shap": 0.2085
+  },
+  {
+    "feature": "std_delay_days",
+    "mean_abs_shap": 0.1708
+  },
+  {
+    "feature": "std_delay_hours",
+    "mean_abs_shap": 0.085
+  },
+  {
+    "feature": "defect_rate",
+    "mean_abs_shap": 0.0793
+  },
+  {
+    "feature": "shipment_count",
+    "mean_abs_shap": 0.0094
+  },
+  {
+    "feature": "ship_on_time_rate",
+    "mean_abs_shap": 0.0
+  },
+  {
+    "feature": "category_encoded",
+    "mean_abs_shap": 0.0
+  },
+  {
+    "feature": "region_encoded",
+    "mean_abs_shap": 0.0
+  }
+]

@@ -1,0 +1,42 @@
+[
+  {
+    "feature": "distance_km",
+    "mean_abs_shap": 2.8216
+  },
+  {
+    "feature": "hist_avg_dur",
+    "mean_abs_shap": 0.0899
+  },
+  {
+    "feature": "weight_kg",
+    "mean_abs_shap": 0.0722
+  },
+  {
+    "feature": "hist_std_dur",
+    "mean_abs_shap": 0.0622
+  },
+  {
+    "feature": "month",
+    "mean_abs_shap": 0.0333
+  },
+  {
+    "feature": "carrier_on_time_rate",
+    "mean_abs_shap": 0.0305
+  },
+  {
+    "feature": "day_of_week",
+    "mean_abs_shap": 0.0272
+  },
+  {
+    "feature": "origin_encoded",
+    "mean_abs_shap": 0.025
+  },
+  {
+    "feature": "vehicle_type_encoded",
+    "mean_abs_shap": 0.0236
+  },
+  {
+    "feature": "dest_encoded",
+    "mean_abs_shap": 0.0186
+  }
+]

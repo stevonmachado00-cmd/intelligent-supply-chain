@@ -1,0 +1,8 @@
+{
+  "demand_xgb": "SUCCESS",
+  "demand_lstm": "SUCCESS",
+  "stockout": "FAILED: Must have at least 1 validation dataset for early stopping.",
+  "supplier_risk": "FAILED: Must have at least 1 validation dataset for early stopping.",
+  "eta": "SUCCESS",
+  "anomaly": "SUCCESS"
+}

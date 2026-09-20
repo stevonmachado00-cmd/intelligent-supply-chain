@@ -1,0 +1,11 @@
+﻿services:
+  - type: web
+    name: intelligent-supply-chain-api
+    runtime: docker
+    dockerfilePath: docker/Dockerfile.api
+    plan: free
+    envVars:
+      - key: API_KEY
+        value: sc-tower-secret-key-2026
+      - key: PORT
+        value: 8000

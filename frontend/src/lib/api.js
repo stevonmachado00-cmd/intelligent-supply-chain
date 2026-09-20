@@ -1,5 +1,5 @@
-const API_BASE = '/api'
-const API_KEY = 'sc-tower-secret-key-2026'
+const API_BASE = (import.meta.env.VITE_API_URL || '/api').replace(/\/$/, '')
+const API_KEY = import.meta.env.VITE_API_KEY || 'sc-tower-secret-key-2026'
 
 async function request(endpoint, options = {}) {
   const url = `${API_BASE}${endpoint}`

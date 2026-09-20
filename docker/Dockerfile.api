@@ -1,4 +1,4 @@
-﻿FROM python:3.11-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -12,10 +12,12 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy source
+# Copy source, data, and trained model artifacts
 COPY src/ ./src/
 COPY api/ ./api/
 COPY configs/ ./configs/
+COPY data/processed/ ./data/processed/
+COPY mlflow/model_artifacts/ ./mlflow/model_artifacts/
 COPY .env.example .env
 
 ENV PYTHONPATH=/app
